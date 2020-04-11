@@ -10,7 +10,7 @@ package liststacktemplate;
  * @author Paul
  * @param <T>
  */
-public class MyList<T> {
+public class MyList<T>{
 
     /**
      * get the ith element stored in the list. Note that this does not return
@@ -20,7 +20,11 @@ public class MyList<T> {
      * @return
      */
     public T get(int i) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(int j=0; j<this.size(); j++){
+            if(j==i){
+                return 
+            }
+        }
     }
 
     /**
@@ -36,7 +40,7 @@ public class MyList<T> {
     /**
      * removes an element (node) at the index specified.
      *
-     * @param i
+     * @param i￼
      * @return the element which was removed. null if invalid index.
      */
     public T removeAtIndex(int i) {
