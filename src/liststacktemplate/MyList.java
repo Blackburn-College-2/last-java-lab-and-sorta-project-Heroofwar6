@@ -10,7 +10,10 @@ package liststacktemplate;
  * @author Paul
  * @param <T>
  */
-public class MyList<T>{
+public class MyList<T> {
+
+    ListNode head;
+    ListNode last;
 
     /**
      * get the ith element stored in the list. Note that this does not return
@@ -20,11 +23,27 @@ public class MyList<T>{
      * @return
      */
     public T get(int i) {
-        for(int j=0; j<this.size(); j++){
-            if(j==i){
-                return 
+        if (this.isEmpty()) {
+            return null;
+        } else {
+            this.last = this.head;
+            for (int j = 0; j < this.size(); j++) {
+                if (j == i) {
+                    if (this.last != null) {
+                        return (T) this.last.getValue();
+                    } else {
+                        return null;
+                    }
+                } else {
+                    if (this.last.next != null) {
+                        this.last = this.last.next;
+                    } else {
+                        return null;
+                    }
+                }
             }
         }
+        return null;
     }
 
     /**
@@ -34,7 +53,22 @@ public class MyList<T>{
      * @return the modified list object
      */
     public MyList<T> add(T v) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        ListNode newNode = new ListNode(v);
+        newNode.next = null;
+        if (this.head == null) {
+            this.head = newNode;
+        } else {
+            this.last = this.head;
+            for (int i = 0; i < this.size(); i++) {
+                if (this.last.next != null) {
+                    this.last = this.last.next;
+                } else {
+                    this.last.next = newNode;
+                }
+            }
+        }
+        return this;
     }
 
     /**
@@ -48,7 +82,29 @@ public class MyList<T>{
         Be careful here! think about edge cases. If you choose to keep a
         'last' pointer, what if the element being removed is last?
          */
-        throw new UnsupportedOperationException("Not supported yet.");
+        int index = i - 1;
+        T item = this.get(i - 1);
+        this.last = this.head;
+        ListNode previous = this.head;
+        for (int j = 0; j < this.size(); j++) {
+            if (j == index) {
+                if (this.last == this.head) {
+                    this.head = this.head.next;
+                    return (T) previous.v;
+                } else if (index < this.size()) {
+                    this.last.next = this.last.next.next;
+                    return (T) previous.v;
+                }
+            } else {
+                if (this.last.next != null) {
+                    this.last = this.last.next;
+                    previous = previous.next;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -58,7 +114,12 @@ public class MyList<T>{
      * @return the index or -1 if not found.
      */
     public int indexOf(T v) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (int i = 0; i < this.size(); i++) {
+            if (this.get(i) == v) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -70,7 +131,24 @@ public class MyList<T>{
      * ls.remove(3).remove(4)...
      */
     public MyList<T> remove(T v) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int index = this.indexOf(v) - 1;
+        this.last = this.head;
+        for (int i = 0; i < this.size(); i++) {
+            if (i == index) {
+                if (this.last == this.head) {
+                    this.head = this.head.next;
+                } else if (index < this.size()) {
+                    this.last.next = this.last.next.next;
+                }
+            } else {
+                if (this.last.next != null) {
+                    this.last = this.last.next;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return this;
     }
 
     /**
@@ -79,7 +157,13 @@ public class MyList<T>{
      * @return the length/size.
      */
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int counter = 0;
+        ListNode x = this.last;
+        while (x != null) {
+            counter++;
+            x = x.next;
+        }
+        return counter;
     }
 
     /**
@@ -88,7 +172,11 @@ public class MyList<T>{
      * @return true if list contains at least 1 element, false otherwise.
      */
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (this.size() < 1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -98,7 +186,13 @@ public class MyList<T>{
      */
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        T current;
+        String print = "";
+        for (int i = 0; i < this.size(); i++) {
+           current = this.get(i);
+           print += current;
+        }
+        return print;
     }
 
 }

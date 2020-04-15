@@ -5,11 +5,14 @@
  */
 package liststacktemplate;
 
+import org.w3c.dom.Node;
+
 /**
  *
  * @author Paul
  */
 public class ListNode<T>  {
+    ListNode next;
     T v;
     /**
      * Create a new ListNode given a value.
@@ -18,6 +21,7 @@ public class ListNode<T>  {
      */
     ListNode(T v) {
         this.v = v;
+        this.next = null;
     }
 
     /**
